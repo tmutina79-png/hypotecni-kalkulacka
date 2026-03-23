@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 Projekt 1: Hypoteční kalkulačka</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           RESET & BASE — LIGHT MODE
+        ═══════════════════════════════════════════ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-main: #f8fafc;
+            --bg-slide: #ffffff;
+            --bg-card: rgba(0,0,0,0.03);
+            --bg-card-hover: rgba(0,0,0,0.06);
+            --accent-purple: #7c3aed;
+            --accent-blue: #2563eb;
+            --accent-cyan: #0891b2;
+            --accent-green: #16a34a;
+            --accent-pink: #db2777;
+            --accent-orange: #ea580c;
+            --accent-yellow: #ca8a04;
+            --accent-red: #dc2626;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: rgba(0,0,0,0.08);
+            --border-strong: rgba(0,0,0,0.12);
+            --glass: rgba(255,255,255,0.7);
+            --glass-border: rgba(0,0,0,0.06);
+            --radius: 16px;
+        }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 24px;
+        }
+
+        /* ═══════════════════════════════════════════
+           CONTENT WRAPPER
+        ═══════════════════════════════════════════ */
+        .content-wrapper {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .centered {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           TYPOGRAPHY
+        ═══════════════════════════════════════════ */
+        .slide-title {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .tag--green { background: #dcfce7; color: var(--accent-green); }
+
+        /* ═══════════════════════════════════════════
+           DIFFICULTY BADGE
+        ═══════════════════════════════════════════ */
+        .difficulty {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        .difficulty--easy { background: #dcfce7; color: var(--accent-green); }
+
+        /* ═══════════════════════════════════════════
+           BULLET LIST
+        ═══════════════════════════════════════════ */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .bullet-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1rem;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        .bullet-list li .bullet-icon {
+            flex-shrink: 0;
+            font-size: 1.2rem;
+            margin-top: 1px;
+        }
+
+        .bullet-list li strong {
+            color: var(--text-primary);
+        }
+
+        /* ═══════════════════════════════════════════
+           PROMPT BOX
+        ═══════════════════════════════════════════ */
+        .prompt-box {
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--text-primary);
+            position: relative;
+            margin-top: 18px;
+            font-weight: 500;
+        }
+
+        .prompt-box::before {
+            content: '💬 Prompt';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            padding: 2px 14px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 6px;
+        }
+
+        .prompt-box.green-prompt {
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+        }
+
+        .prompt-box.green-prompt::before {
+            color: var(--accent-green);
+            background: #dcfce7;
+        }
+
+        /* ═══════════════════════════════════════════
+           HIGHLIGHT BOX
+        ═══════════════════════════════════════════ */
+        .highlight-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--accent-purple);
+            padding: 18px 22px;
+            border-radius: 0 14px 14px 0;
+        }
+
+        .highlight-box p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ═══════════════════════════════════════════
+           UTILITIES
+        ═══════════════════════════════════════════ */
+        .left-align { text-align: left; }
+        .mt-32 { margin-top: 32px; }
+        .mt-20 { margin-top: 20px; }
+        .mb-16 { margin-bottom: 16px; }
+
+        /* ═══════════════════════════════════════════
+           ANIMATIONS
+        ═══════════════════════════════════════════ */
+        .fade-in         { animation: childFade 0.5s 0.05s ease both; }
+        .fade-in-delay-1 { animation: childFade 0.5s 0.18s ease both; }
+        .fade-in-delay-2 { animation: childFade 0.5s 0.32s ease both; }
+        .fade-in-delay-3 { animation: childFade 0.5s 0.46s ease both; }
+
+        @keyframes childFade {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════ */
+        @media (max-width: 600px) {
+            body { padding: 24px 16px; }
+            .prompt-box { padding: 22px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-wrapper">
+        <div class="centered">
+            <span class="tag tag--green fade-in">Praktická část</span>
+            <h2 class="slide-title fade-in-delay-1">🏠 Projekt 1: Hypoteční kalkulačka</h2>
+            <span class="difficulty difficulty--easy fade-in-delay-1">🟢 Low Effort — Zaměření na funkčnost</span>
+        </div>
+
+        <div class="left-align mt-32 fade-in-delay-2">
+            <ul class="bullet-list mb-16">
+                <li>
+                    <span class="bullet-icon">🎯</span>
+                    <span><strong>Cíl:</strong> Vytvořit kalkulačku, která spočítá měsíční splátku hypotéky podle ceny, úroku a doby splácení.</span>
+                </li>
+                <li>
+                    <span class="bullet-icon">🔑</span>
+                    <span><strong>Co se naučíš:</strong> Jak AI vygeneruje kompletní logiku + vzorce. Ty jen měníš parametry a vylepšuješ design.</span>
+                </li>
+                <li>
+                    <span class="bullet-icon">⏱️</span>
+                    <span><strong>Čas:</strong> <span style="color: var(--accent-red); font-weight: 800;">❓❓❓</span> na fungující verzi, pak vizuální vylepšení.</span>
+                </li>
+            </ul>
+
+            <div class="prompt-box green-prompt">
+                <strong>Vytvoř HTML stránku s hypoteční kalkulačkou. Světlý moderní design. Inputy: cena nemovitosti, vlastní prostředky, úroková sazba (%), doba splácení (roky). Výstup: měsíční splátka, celkem zaplaceno, přeplatek. Přidej posuvníky (range slidery) vedle inputů. Výsledek se přepočítá automaticky při změně. Přidej graf rozložení splátek (jistina vs. úroky). Všechno v jednom HTML souboru.</strong>
+            </div>
+
+            <div class="highlight-box mt-20 fade-in-delay-3">
+                <p>
+                    <strong style="color:var(--text-primary);">🔄 Jak to upravit?</strong>
+                    Změň na autoleasingovou kalkulačku, kalkulačku spoření, nebo třeba porovnávač tarifů. Logika výpočtů = jeden prompt.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer fade-in-delay-3">
+            Workshop MGO · 2026 · Vibe Coding
+        </div>
+    </div>
+
+</body>
+</html>
