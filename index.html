@@ -3,270 +3,678 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏠 Projekt 1: Hypoteční kalkulačka</title>
+    <title>🏠 Hypoteční kalkulačka</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════
-           RESET & BASE — LIGHT MODE
-        ═══════════════════════════════════════════ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg-main: #f8fafc;
-            --bg-slide: #ffffff;
-            --bg-card: rgba(0,0,0,0.03);
-            --bg-card-hover: rgba(0,0,0,0.06);
-            --accent-purple: #7c3aed;
-            --accent-blue: #2563eb;
-            --accent-cyan: #0891b2;
-            --accent-green: #16a34a;
-            --accent-pink: #db2777;
-            --accent-orange: #ea580c;
-            --accent-yellow: #ca8a04;
-            --accent-red: #dc2626;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --border: rgba(0,0,0,0.08);
-            --border-strong: rgba(0,0,0,0.12);
-            --glass: rgba(255,255,255,0.7);
-            --glass-border: rgba(0,0,0,0.06);
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --primary: #6366f1;
+            --primary-light: #e0e7ff;
+            --primary-dark: #4338ca;
+            --accent: #f97316;
+            --accent-light: #fff7ed;
+            --green: #22c55e;
+            --red: #ef4444;
+            --text: #1e293b;
+            --text2: #475569;
+            --text3: #94a3b8;
+            --border: #e2e8f0;
             --radius: 16px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
         }
 
         html { font-size: 16px; }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 24px;
+            padding: 32px 16px 64px;
         }
 
-        /* ═══════════════════════════════════════════
-           CONTENT WRAPPER
-        ═══════════════════════════════════════════ */
-        .content-wrapper {
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .centered {
+        /* ── HEADER ── */
+        .header {
             text-align: center;
-            margin-bottom: 32px;
+            max-width: 600px;
+            margin: 0 auto 40px;
         }
 
-        /* ═══════════════════════════════════════════
-           TYPOGRAPHY
-        ═══════════════════════════════════════════ */
-        .slide-title {
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-
-        .tag {
+        .header .badge {
             display: inline-block;
-            padding: 6px 18px;
-            border-radius: 100px;
-            font-size: 0.85rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.78rem;
             font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .tag--green { background: #dcfce7; color: var(--accent-green); }
-
-        /* ═══════════════════════════════════════════
-           DIFFICULTY BADGE
-        ═══════════════════════════════════════════ */
-        .difficulty {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
             padding: 5px 16px;
             border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
         }
 
-        .difficulty--easy { background: #dcfce7; color: var(--accent-green); }
+        .header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
 
-        /* ═══════════════════════════════════════════
-           BULLET LIST
-        ═══════════════════════════════════════════ */
-        .bullet-list {
-            list-style: none;
+        .header h1 .hl {
+            background: linear-gradient(135deg, var(--primary), #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: var(--text2);
+            font-size: 1.05rem;
+            line-height: 1.55;
+        }
+
+        /* ── LAYOUT ── */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 1060px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 28px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon { font-size: 1.4rem; }
+
+        .full-width { grid-column: 1 / -1; }
+
+        /* ── INPUT GROUP ── */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-group:last-child { margin-bottom: 0; }
+
+        .input-group label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text2);
+            margin-bottom: 10px;
+        }
+
+        .input-group label .val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
             gap: 14px;
         }
 
-        .bullet-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 1rem;
-            line-height: 1.55;
-            color: var(--text-secondary);
-        }
-
-        .bullet-list li .bullet-icon {
+        .input-row input[type="number"] {
+            width: 150px;
             flex-shrink: 0;
-            font-size: 1.2rem;
-            margin-top: 1px;
-        }
-
-        .bullet-list li strong {
-            color: var(--text-primary);
-        }
-
-        /* ═══════════════════════════════════════════
-           PROMPT BOX
-        ═══════════════════════════════════════════ */
-        .prompt-box {
-            border-radius: var(--radius);
-            padding: 28px 32px;
-            font-size: 1rem;
-            line-height: 1.75;
-            color: var(--text-primary);
-            position: relative;
-            margin-top: 18px;
-            font-weight: 500;
-        }
-
-        .prompt-box::before {
-            content: '💬 Prompt';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            padding: 2px 14px;
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-radius: 6px;
-        }
-
-        .prompt-box.green-prompt {
-            background: #f0fdf4;
-            border: 2px solid #bbf7d0;
-        }
-
-        .prompt-box.green-prompt::before {
-            color: var(--accent-green);
-            background: #dcfce7;
-        }
-
-        /* ═══════════════════════════════════════════
-           HIGHLIGHT BOX
-        ═══════════════════════════════════════════ */
-        .highlight-box {
-            background: #f8fafc;
-            border-left: 4px solid var(--accent-purple);
-            padding: 18px 22px;
-            border-radius: 0 14px 14px 0;
-        }
-
-        .highlight-box p {
+            padding: 11px 14px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.65;
+            font-weight: 700;
+            color: var(--text);
+            background: var(--bg);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        /* ═══════════════════════════════════════════
-           UTILITIES
-        ═══════════════════════════════════════════ */
-        .left-align { text-align: left; }
-        .mt-32 { margin-top: 32px; }
-        .mt-20 { margin-top: 20px; }
-        .mb-16 { margin-bottom: 16px; }
+        .input-row input[type="number"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+        }
 
-        /* ═══════════════════════════════════════════
-           ANIMATIONS
-        ═══════════════════════════════════════════ */
-        .fade-in         { animation: childFade 0.5s 0.05s ease both; }
-        .fade-in-delay-1 { animation: childFade 0.5s 0.18s ease both; }
-        .fade-in-delay-2 { animation: childFade 0.5s 0.32s ease both; }
-        .fade-in-delay-3 { animation: childFade 0.5s 0.46s ease both; }
+        /* Hide spinners */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 
-        @keyframes childFade {
-            from { opacity: 0; transform: translateY(14px); }
+        /* ── RANGE SLIDER ── */
+        .input-row input[type="range"] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+            transition: background 0.2s;
+        }
+
+        .input-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            cursor: pointer;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.35);
+            transition: transform 0.15s;
+        }
+
+        .input-row input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        .input-row input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            cursor: pointer;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.35);
+        }
+
+        .input-row .unit {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text3);
+            min-width: 24px;
+            flex-shrink: 0;
+        }
+
+        /* ── RESULTS ── */
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .result-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .result-box:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .result-box.main {
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            border-color: #c7d2fe;
+        }
+
+        .result-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .result-box.main .result-value {
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-sub {
+            font-size: 0.75rem;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+
+        /* ── DONUT CHART ── */
+        .chart-wrap {
+            text-align: center;
+        }
+
+        .donut {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 18px;
+            position: relative;
+        }
+
+        .donut svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .donut .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut .center .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .donut .center .lbl {
+            font-size: 0.68rem;
+            color: var(--text3);
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text2);
+        }
+
+        .legend-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 3px;
+        }
+
+        .dot-principal { background: linear-gradient(135deg, var(--primary), #8b5cf6); }
+        .dot-interest  { background: linear-gradient(135deg, var(--accent), var(--red)); }
+
+        /* ── BAR CHART ── */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 200px;
+            margin-top: 18px;
+            padding-bottom: 24px;
+            position: relative;
+        }
+
+        .bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .bar-stack {
+            width: 100%;
+            max-width: 36px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+
+        .bar-stack:hover { opacity: 0.8; }
+
+        .bar-p { background: linear-gradient(180deg, var(--primary), #8b5cf6); }
+        .bar-i { background: linear-gradient(180deg, var(--accent), var(--red)); }
+
+        .bar-yr {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58rem;
+            color: var(--text3);
+            font-weight: 600;
+            margin-top: 5px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .bar-tip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 4px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: #fff;
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-size: 0.68rem;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            z-index: 5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+        }
+
+        .bar-col:hover .bar-tip { display: block; }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            margin-top: 48px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text3);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 860px) {
+            .grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: 1; }
+        }
+
+        @media (max-width: 480px) {
+            .input-row { flex-wrap: wrap; }
+            .input-row input[type="number"] { width: 100%; }
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ═══════════════════════════════════════════
-           FOOTER
-        ═══════════════════════════════════════════ */
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* ═══════════════════════════════════════════
-           RESPONSIVE
-        ═══════════════════════════════════════════ */
-        @media (max-width: 600px) {
-            body { padding: 24px 16px; }
-            .prompt-box { padding: 22px 18px; }
-        }
+        .anim-1 { animation: fadeUp 0.45s 0.05s ease both; }
+        .anim-2 { animation: fadeUp 0.45s 0.15s ease both; }
+        .anim-3 { animation: fadeUp 0.45s 0.25s ease both; }
+        .anim-4 { animation: fadeUp 0.45s 0.35s ease both; }
     </style>
 </head>
 <body>
 
-    <div class="content-wrapper">
-        <div class="centered">
-            <span class="tag tag--green fade-in">Praktická část</span>
-            <h2 class="slide-title fade-in-delay-1">🏠 Projekt 1: Hypoteční kalkulačka</h2>
-            <span class="difficulty difficulty--easy fade-in-delay-1">🟢 Low Effort — Zaměření na funkčnost</span>
-        </div>
+    <!-- HEADER -->
+    <div class="header anim-1">
+        <span class="badge">Hypoteční kalkulačka</span>
+        <h1>🏠 Spočítej si <span class="hl">splátku hypotéky</span></h1>
+        <p>Zadej parametry a výsledek se přepočítá automaticky. Vše na jednom místě — splátka, přeplatek i graf.</p>
+    </div>
 
-        <div class="left-align mt-32 fade-in-delay-2">
-            <ul class="bullet-list mb-16">
-                <li>
-                    <span class="bullet-icon">🎯</span>
-                    <span><strong>Cíl:</strong> Vytvořit kalkulačku, která spočítá měsíční splátku hypotéky podle ceny, úroku a doby splácení.</span>
-                </li>
-                <li>
-                    <span class="bullet-icon">🔑</span>
-                    <span><strong>Co se naučíš:</strong> Jak AI vygeneruje kompletní logiku + vzorce. Ty jen měníš parametry a vylepšuješ design.</span>
-                </li>
-                <li>
-                    <span class="bullet-icon">⏱️</span>
-                    <span><strong>Čas:</strong> <span style="color: var(--accent-red); font-weight: 800;">❓❓❓</span> na fungující verzi, pak vizuální vylepšení.</span>
-                </li>
-            </ul>
+    <!-- GRID -->
+    <div class="grid">
 
-            <div class="prompt-box green-prompt">
-                <strong>Vytvoř HTML stránku s hypoteční kalkulačkou. Světlý moderní design. Inputy: cena nemovitosti, vlastní prostředky, úroková sazba (%), doba splácení (roky). Výstup: měsíční splátka, celkem zaplaceno, přeplatek. Přidej posuvníky (range slidery) vedle inputů. Výsledek se přepočítá automaticky při změně. Přidej graf rozložení splátek (jistina vs. úroky). Všechno v jednom HTML souboru.</strong>
+        <!-- INPUTS -->
+        <div class="card anim-2">
+            <div class="card-title"><span class="icon">⚙️</span> Parametry</div>
+
+            <div class="input-group">
+                <label>Cena nemovitosti <span class="val" id="priceVal">4 000 000 Kč</span></label>
+                <div class="input-row">
+                    <input type="number" id="price" value="4000000" min="500000" max="20000000" step="100000">
+                    <input type="range" id="priceR" min="500000" max="20000000" step="100000" value="4000000">
+                </div>
             </div>
 
-            <div class="highlight-box mt-20 fade-in-delay-3">
-                <p>
-                    <strong style="color:var(--text-primary);">🔄 Jak to upravit?</strong>
-                    Změň na autoleasingovou kalkulačku, kalkulačku spoření, nebo třeba porovnávač tarifů. Logika výpočtů = jeden prompt.
-                </p>
+            <div class="input-group">
+                <label>Vlastní prostředky <span class="val" id="downVal">800 000 Kč</span></label>
+                <div class="input-row">
+                    <input type="number" id="down" value="800000" min="0" max="19000000" step="50000">
+                    <input type="range" id="downR" min="0" max="19000000" step="50000" value="800000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Úroková sazba <span class="val" id="rateVal">5,5 %</span></label>
+                <div class="input-row">
+                    <input type="number" id="rate" value="5.5" min="0.1" max="15" step="0.1">
+                    <input type="range" id="rateR" min="0.1" max="15" step="0.1" value="5.5">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Doba splácení <span class="val" id="yearsVal">30 let</span></label>
+                <div class="input-row">
+                    <input type="number" id="years" value="30" min="1" max="40" step="1">
+                    <input type="range" id="yearsR" min="1" max="40" step="1" value="30">
+                </div>
             </div>
         </div>
 
-        <div class="footer fade-in-delay-3">
-            Workshop MGO · 2026 · Vibe Coding
+        <!-- RESULTS -->
+        <div class="card anim-3">
+            <div class="card-title"><span class="icon">📊</span> Výsledky</div>
+
+            <div class="results">
+                <div class="result-box main">
+                    <div class="result-label">Měsíční splátka</div>
+                    <div class="result-value" id="monthly">—</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-label">Výše hypotéky</div>
+                    <div class="result-value" id="loan">—</div>
+                    <div class="result-sub">cena − vlastní prostředky</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-label">Celkem zaplaceno</div>
+                    <div class="result-value" id="total">—</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-label">Přeplatek (úroky)</div>
+                    <div class="result-value" id="over">—</div>
+                    <div class="result-sub" id="overPct"></div>
+                </div>
+            </div>
+
+            <!-- DONUT -->
+            <div class="chart-wrap">
+                <div class="donut">
+                    <svg viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+                        <circle id="arcP" cx="60" cy="60" r="50" fill="none" stroke="url(#gP)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                        <circle id="arcI" cx="60" cy="60" r="50" fill="none" stroke="url(#gI)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="gP" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
+                            </linearGradient>
+                            <linearGradient id="gI" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#f97316"/>
+                                <stop offset="100%" stop-color="#ef4444"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="center">
+                        <div class="num" id="donutNum">—</div>
+                        <div class="lbl">celkem</div>
+                    </div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
+                    <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BAR CHART -->
+        <div class="card full-width anim-4">
+            <div class="card-title"><span class="icon">📈</span> Rozložení splátek po letech</div>
+            <div class="legend" style="margin-bottom:4px;">
+                <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
+                <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
+            </div>
+            <div class="bar-chart" id="bars"></div>
         </div>
     </div>
 
+    <div class="footer anim-4">Workshop MGO · 2026 · Vibe Coding</div>
+
+    <script>
+    (() => {
+        /* ── helpers ── */
+        const $ = id => document.getElementById(id);
+        const fmt = n => Math.round(n).toLocaleString('cs-CZ') + ' Kč';
+        const fmtShort = n => {
+            if (n >= 1e6) return (n / 1e6).toFixed(1).replace('.0', '').replace('.', ',') + ' M Kč';
+            if (n >= 1e3) return Math.round(n / 1e3) + ' tis. Kč';
+            return Math.round(n) + ' Kč';
+        };
+
+        /* ── sync pairs ── */
+        const pairs = [
+            ['price', 'priceR', 'priceVal', v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
+            ['down',  'downR',  'downVal',  v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
+            ['rate',  'rateR',  'rateVal',  v => parseFloat(v).toFixed(1).replace('.', ',') + ' %'],
+            ['years', 'yearsR', 'yearsVal', v => v + ' let'],
+        ];
+
+        pairs.forEach(([inp, rng, lbl, format]) => {
+            const i = $(inp), r = $(rng), l = $(lbl);
+            const sync = () => { l.textContent = format(i.value); };
+            i.addEventListener('input', () => { r.value = i.value; sync(); calc(); });
+            r.addEventListener('input', () => { i.value = r.value; sync(); calc(); });
+        });
+
+        /* ── main calculation ── */
+        function calc() {
+            const P = parseFloat($('price').value) - parseFloat($('down').value);
+            const r = parseFloat($('rate').value) / 100 / 12;
+            const n = parseInt($('years').value) * 12;
+
+            if (P <= 0 || r <= 0 || n <= 0) {
+                $('monthly').textContent = '—';
+                $('loan').textContent = P > 0 ? fmt(P) : '0 Kč';
+                $('total').textContent = '—';
+                $('over').textContent = '—';
+                $('overPct').textContent = '';
+                return;
+            }
+
+            const M = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const tot = M * n;
+            const interest = tot - P;
+
+            $('monthly').textContent = fmt(M);
+            $('loan').textContent = fmt(P);
+            $('total').textContent = fmt(tot);
+            $('over').textContent = fmt(interest);
+            $('overPct').textContent = (interest / P * 100).toFixed(1).replace('.', ',') + ' % z jistiny';
+
+            donut(P, interest, tot);
+            barChart(P, r, n, M);
+        }
+
+        /* ── donut ── */
+        function donut(principal, interest, total) {
+            const C = 2 * Math.PI * 50;
+            const pLen = (principal / total) * C;
+            const iLen = (interest / total) * C;
+
+            $('arcP').style.strokeDasharray = pLen + ' ' + C;
+            $('arcP').style.strokeDashoffset = '0';
+            $('arcI').style.strokeDasharray = iLen + ' ' + C;
+            $('arcI').style.strokeDashoffset = -pLen;
+            $('donutNum').textContent = fmtShort(total);
+        }
+
+        /* ── bar chart ── */
+        function barChart(P, r, n, M) {
+            const el = $('bars');
+            el.innerHTML = '';
+            const totalYears = Math.ceil(n / 12);
+            let bal = P, maxY = 0;
+            const data = [];
+
+            for (let y = 1; y <= totalYears; y++) {
+                let yP = 0, yI = 0;
+                const months = Math.min(12, n - (y - 1) * 12);
+                for (let m = 0; m < months; m++) {
+                    const ip = bal * r;
+                    const pp = M - ip;
+                    yI += ip; yP += pp;
+                    bal = Math.max(0, bal - pp);
+                }
+                data.push({ yr: y, p: yP, i: yI });
+                if (yP + yI > maxY) maxY = yP + yI;
+            }
+
+            data.forEach(d => {
+                const tot = d.p + d.i;
+                const hPct = (tot / maxY) * 100;
+                const pPct = (d.p / tot) * 100;
+                const iPct = 100 - pPct;
+
+                const col = document.createElement('div');
+                col.className = 'bar-col';
+
+                const tip = document.createElement('div');
+                tip.className = 'bar-tip';
+                tip.innerHTML = 'Rok ' + d.yr + '<br>Jistina: ' + fmt(d.p) + '<br>Úroky: ' + fmt(d.i);
+
+                const stack = document.createElement('div');
+                stack.className = 'bar-stack';
+                stack.style.height = hPct + '%';
+
+                const bi = document.createElement('div');
+                bi.className = 'bar-i';
+                bi.style.height = iPct + '%';
+
+                const bp = document.createElement('div');
+                bp.className = 'bar-p';
+                bp.style.height = pPct + '%';
+
+                stack.appendChild(bi);
+                stack.appendChild(bp);
+
+                const lbl = document.createElement('div');
+                lbl.className = 'bar-yr';
+                // Show every Nth label to avoid crowding
+                const step = totalYears > 25 ? 5 : totalYears > 15 ? 3 : totalYears > 8 ? 2 : 1;
+                lbl.textContent = (d.yr % step === 0 || d.yr === 1 || d.yr === totalYears) ? d.yr : '';
+
+                col.appendChild(tip);
+                col.appendChild(stack);
+                col.appendChild(lbl);
+                el.appendChild(col);
+            });
+        }
+
+        /* ── init ── */
+        calc();
+    })();
+    </script>
 </body>
 </html>
