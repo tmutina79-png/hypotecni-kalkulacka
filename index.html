@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏠 Hypoteční kalkulačka</title>
+    <title>🏠 Finanční kalkulačky</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -18,6 +18,7 @@
             --accent: #f97316;
             --accent-light: #fff7ed;
             --green: #22c55e;
+            --green-light: #dcfce7;
             --red: #ef4444;
             --text: #1e293b;
             --text2: #475569;
@@ -25,6 +26,7 @@
             --border: #e2e8f0;
             --radius: 16px;
             --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+            --sidebar-w: 260px;
         }
 
         html { font-size: 16px; }
@@ -34,8 +36,153 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            padding: 32px 16px 64px;
+            display: flex;
         }
+
+        /* ══════════════════════════════════════
+           SIDEBAR
+        ══════════════════════════════════════ */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 28px 16px;
+            z-index: 60;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 8px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-brand .brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand .brand-text {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .sidebar-brand .brand-sub {
+            font-size: 0.68rem;
+            font-weight: 500;
+            color: var(--text3);
+        }
+
+        .sidebar-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0 8px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text2);
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .sidebar-nav li a:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .sidebar-nav li a.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .sidebar-nav li a .nav-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 16px 8px 0;
+            border-top: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--text3);
+            text-align: center;
+        }
+
+        /* Mobile toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            z-index: 70;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            box-shadow: var(--shadow);
+            font-size: 1.2rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ══════════════════════════════════════
+           MAIN CONTENT
+        ══════════════════════════════════════ */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            min-height: 100vh;
+            padding: 32px 24px 64px;
+        }
+
+        /* Pages */
+        .page { display: none; }
+        .page.active { display: block; }
 
         /* ── HEADER ── */
         .header {
@@ -57,6 +204,8 @@
             margin-bottom: 14px;
         }
 
+        .header .badge.green { background: var(--green-light); color: var(--green); }
+
         .header h1 {
             font-size: clamp(1.8rem, 4vw, 2.6rem);
             font-weight: 900;
@@ -67,6 +216,13 @@
 
         .header h1 .hl {
             background: linear-gradient(135deg, var(--primary), #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header h1 .hl-green {
+            background: linear-gradient(135deg, var(--green), #0d9488, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -109,10 +265,7 @@
         .full-width { grid-column: 1 / -1; }
 
         /* ── INPUT GROUP ── */
-        .input-group {
-            margin-bottom: 24px;
-        }
-
+        .input-group { margin-bottom: 24px; }
         .input-group:last-child { margin-bottom: 0; }
 
         .input-group label {
@@ -131,6 +284,8 @@
             font-weight: 700;
             color: var(--primary);
         }
+
+        .input-group label .val.green-val { color: var(--green); }
 
         .input-row {
             display: flex;
@@ -158,7 +313,6 @@
             box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
         }
 
-        /* Hide spinners */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
@@ -172,7 +326,6 @@
             background: var(--border);
             border-radius: 3px;
             outline: none;
-            transition: background 0.2s;
         }
 
         .input-row input[type="range"]::-webkit-slider-thumb {
@@ -188,17 +341,12 @@
             transition: transform 0.15s;
         }
 
-        .input-row input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.15);
-        }
+        .input-row input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
 
         .input-row input[type="range"]::-moz-range-thumb {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
+            width: 22px; height: 22px; border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), #8b5cf6);
-            cursor: pointer;
-            border: 3px solid #fff;
+            cursor: pointer; border: 3px solid #fff;
             box-shadow: 0 2px 8px rgba(99,102,241,0.35);
         }
 
@@ -237,6 +385,11 @@
             border-color: #c7d2fe;
         }
 
+        .result-box.main-green {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-color: #a7f3d0;
+        }
+
         .result-label {
             font-size: 0.72rem;
             font-weight: 700;
@@ -261,6 +414,14 @@
             background-clip: text;
         }
 
+        .result-box.main-green .result-value {
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, var(--green), #0d9488);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .result-sub {
             font-size: 0.75rem;
             color: var(--text3);
@@ -268,149 +429,111 @@
         }
 
         /* ── DONUT CHART ── */
-        .chart-wrap {
-            text-align: center;
-        }
+        .chart-wrap { text-align: center; }
 
         .donut {
-            width: 180px;
-            height: 180px;
+            width: 180px; height: 180px;
             margin: 0 auto 18px;
             position: relative;
         }
 
-        .donut svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
+        .donut svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 
         .donut .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); text-align: center;
         }
 
         .donut .center .num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text);
+            font-size: 1rem; font-weight: 700; color: var(--text);
         }
 
-        .donut .center .lbl {
-            font-size: 0.68rem;
-            color: var(--text3);
-        }
+        .donut .center .lbl { font-size: 0.68rem; color: var(--text3); }
 
         .legend {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
+            display: flex; justify-content: center; gap: 24px;
         }
 
         .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: var(--text2);
+            display: flex; align-items: center; gap: 7px;
+            font-size: 0.82rem; font-weight: 500; color: var(--text2);
         }
 
-        .legend-dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 3px;
-        }
+        .legend-dot { width: 11px; height: 11px; border-radius: 3px; }
 
         .dot-principal { background: linear-gradient(135deg, var(--primary), #8b5cf6); }
         .dot-interest  { background: linear-gradient(135deg, var(--accent), var(--red)); }
+        .dot-deposit   { background: linear-gradient(135deg, var(--green), #0d9488); }
+        .dot-profit    { background: linear-gradient(135deg, #06b6d4, #2563eb); }
 
         /* ── BAR CHART ── */
         .bar-chart {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 200px;
-            margin-top: 18px;
-            padding-bottom: 24px;
+            display: flex; align-items: flex-end; gap: 3px;
+            height: 200px; margin-top: 18px; padding-bottom: 24px;
             position: relative;
         }
 
         .bar-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            justify-content: flex-end;
-            position: relative;
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; height: 100%;
+            justify-content: flex-end; position: relative;
         }
 
         .bar-stack {
-            width: 100%;
-            max-width: 36px;
-            border-radius: 5px 5px 0 0;
-            overflow: hidden;
-            cursor: pointer;
-            transition: opacity 0.15s;
+            width: 100%; max-width: 36px;
+            border-radius: 5px 5px 0 0; overflow: hidden;
+            cursor: pointer; transition: opacity 0.15s;
         }
 
         .bar-stack:hover { opacity: 0.8; }
 
         .bar-p { background: linear-gradient(180deg, var(--primary), #8b5cf6); }
         .bar-i { background: linear-gradient(180deg, var(--accent), var(--red)); }
+        .bar-dep { background: linear-gradient(180deg, var(--green), #0d9488); }
+        .bar-prof { background: linear-gradient(180deg, #06b6d4, #2563eb); }
 
         .bar-yr {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.58rem;
-            color: var(--text3);
-            font-weight: 600;
-            margin-top: 5px;
-            position: absolute;
-            bottom: 0;
+            font-size: 0.58rem; color: var(--text3);
+            font-weight: 600; margin-top: 5px;
+            position: absolute; bottom: 0;
         }
 
         .bar-tip {
-            display: none;
-            position: absolute;
-            bottom: calc(100% + 4px);
-            left: 50%;
+            display: none; position: absolute;
+            bottom: calc(100% + 4px); left: 50%;
             transform: translateX(-50%);
-            background: var(--text);
-            color: #fff;
-            padding: 7px 11px;
-            border-radius: 8px;
+            background: var(--text); color: #fff;
+            padding: 7px 11px; border-radius: 8px;
             font-size: 0.68rem;
             font-family: 'JetBrains Mono', monospace;
-            white-space: nowrap;
-            z-index: 5;
+            white-space: nowrap; z-index: 5;
             box-shadow: 0 4px 12px rgba(0,0,0,0.18);
         }
 
         .bar-col:hover .bar-tip { display: block; }
 
-        /* ── FOOTER ── */
-        .footer {
-            text-align: center;
-            margin-top: 48px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            color: var(--text3);
+        /* ── QR CODE ── */
+        .qr-box {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 12px;
+            box-shadow: var(--shadow); z-index: 50;
+            text-align: center; transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 860px) {
-            .grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: 1; }
+        .qr-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
 
-        @media (max-width: 480px) {
-            .input-row { flex-wrap: wrap; }
-            .input-row input[type="number"] { width: 100%; }
+        .qr-box img { width: 100px; height: 100px; border-radius: 8px; }
+
+        .qr-box .qr-label {
+            font-size: 0.62rem; font-weight: 700;
+            color: var(--text3); margin-top: 6px;
+            text-transform: uppercase; letter-spacing: 0.05em;
         }
 
         /* ── ANIMATIONS ── */
@@ -424,180 +547,304 @@
         .anim-3 { animation: fadeUp 0.45s 0.25s ease both; }
         .anim-4 { animation: fadeUp 0.45s 0.35s ease both; }
 
-        /* ── QR CODE ── */
-        .qr-box {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
-            box-shadow: var(--shadow);
-            z-index: 50;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+        /* ── RESPONSIVE ── */
+        @media (max-width: 960px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-toggle { display: flex; }
+            .main { margin-left: 0; }
         }
 
-        .qr-box:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-
-        .qr-box img {
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
-        }
-
-        .qr-box .qr-label {
-            font-size: 0.62rem;
-            font-weight: 700;
-            color: var(--text3);
-            margin-top: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        @media (max-width: 860px) {
+            .grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: 1; }
         }
 
         @media (max-width: 600px) {
-            .qr-box {
-                top: 10px;
-                right: 10px;
-                padding: 8px;
-            }
-            .qr-box img {
-                width: 70px;
-                height: 70px;
-            }
+            .qr-box { top: 10px; right: 10px; padding: 8px; }
+            .qr-box img { width: 70px; height: 70px; }
         }
+
+        @media (max-width: 480px) {
+            .input-row { flex-wrap: wrap; }
+            .input-row input[type="number"] { width: 100%; }
+        }
+
+        /* Overlay for mobile sidebar */
+        .sidebar-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 55;
+        }
+
+        .sidebar-overlay.show { display: block; }
     </style>
 </head>
 <body>
 
-    <!-- QR CODE -->
-    <a href="https://tmutina79-png.github.io/hypotecni-kalkulacka/" class="qr-box" target="_blank" title="Otevřít stránku">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://tmutina79-png.github.io/hypotecni-kalkulacka/" alt="QR kód">
-        <div class="qr-label">Sdílej odkaz</div>
-    </a>
-
-    <!-- HEADER -->
-    <div class="header anim-1">
-        <span class="badge">Hypoteční kalkulačka</span>
-        <h1>🏠 Spočítej si <span class="hl">splátku hypotéky</span></h1>
-        <p>Zadej parametry a výsledek se přepočítá automaticky. Vše na jednom místě — splátka, přeplatek i graf.</p>
-    </div>
-
-    <!-- GRID -->
-    <div class="grid">
-
-        <!-- INPUTS -->
-        <div class="card anim-2">
-            <div class="card-title"><span class="icon">⚙️</span> Parametry</div>
-
-            <div class="input-group">
-                <label>Cena nemovitosti <span class="val" id="priceVal">4 000 000 Kč</span></label>
-                <div class="input-row">
-                    <input type="number" id="price" value="4000000" min="500000" max="20000000" step="100000">
-                    <input type="range" id="priceR" min="500000" max="20000000" step="100000" value="4000000">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Vlastní prostředky <span class="val" id="downVal">800 000 Kč</span></label>
-                <div class="input-row">
-                    <input type="number" id="down" value="800000" min="0" max="19000000" step="50000">
-                    <input type="range" id="downR" min="0" max="19000000" step="50000" value="800000">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Úroková sazba <span class="val" id="rateVal">5,5 %</span></label>
-                <div class="input-row">
-                    <input type="number" id="rate" value="5.5" min="0.1" max="15" step="0.1">
-                    <input type="range" id="rateR" min="0.1" max="15" step="0.1" value="5.5">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Doba splácení <span class="val" id="yearsVal">30 let</span></label>
-                <div class="input-row">
-                    <input type="number" id="years" value="30" min="1" max="40" step="1">
-                    <input type="range" id="yearsR" min="1" max="40" step="1" value="30">
-                </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">💰</div>
+            <div>
+                <div class="brand-text">Finanční kalkulačky</div>
+                <div class="brand-sub">Workshop MGO 2026</div>
             </div>
         </div>
 
-        <!-- RESULTS -->
-        <div class="card anim-3">
-            <div class="card-title"><span class="icon">📊</span> Výsledky</div>
+        <div class="sidebar-label">Kalkulačky</div>
+        <ul class="sidebar-nav">
+            <li><a href="#" class="active" data-page="mortgage" onclick="switchPage('mortgage', this)">
+                <span class="nav-icon">🏠</span> Hypoteční kalkulačka
+            </a></li>
+            <li><a href="#" data-page="invest" onclick="switchPage('invest', this)">
+                <span class="nav-icon">📈</span> Investiční kalkulačka
+            </a></li>
+        </ul>
 
-            <div class="results">
-                <div class="result-box main">
-                    <div class="result-label">Měsíční splátka</div>
-                    <div class="result-value" id="monthly">—</div>
-                </div>
-                <div class="result-box">
-                    <div class="result-label">Výše hypotéky</div>
-                    <div class="result-value" id="loan">—</div>
-                    <div class="result-sub">cena − vlastní prostředky</div>
-                </div>
-                <div class="result-box">
-                    <div class="result-label">Celkem zaplaceno</div>
-                    <div class="result-value" id="total">—</div>
-                </div>
-                <div class="result-box">
-                    <div class="result-label">Přeplatek (úroky)</div>
-                    <div class="result-value" id="over">—</div>
-                    <div class="result-sub" id="overPct"></div>
-                </div>
+        <div class="sidebar-footer">
+            Workshop MGO · 2026<br>Vibe Coding
+        </div>
+    </aside>
+
+    <!-- Mobile sidebar toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- QR CODE -->
+        <a href="https://tmutina79-png.github.io/hypotecni-kalkulacka/" class="qr-box" target="_blank" title="Otevřít stránku">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://tmutina79-png.github.io/hypotecni-kalkulacka/" alt="QR kód">
+            <div class="qr-label">Sdílej odkaz</div>
+        </a>
+
+        <!-- ════════════════════════════════════════════
+             PAGE 1: HYPOTEČNÍ KALKULAČKA
+        ════════════════════════════════════════════ -->
+        <div class="page active" id="page-mortgage">
+
+            <div class="header anim-1">
+                <span class="badge">Hypoteční kalkulačka</span>
+                <h1>🏠 Spočítej si <span class="hl">splátku hypotéky</span></h1>
+                <p>Zadej parametry a výsledek se přepočítá automaticky. Vše na jednom místě — splátka, přeplatek i graf.</p>
             </div>
 
-            <!-- DONUT -->
-            <div class="chart-wrap">
-                <div class="donut">
-                    <svg viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
-                        <circle id="arcP" cx="60" cy="60" r="50" fill="none" stroke="url(#gP)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
-                        <circle id="arcI" cx="60" cy="60" r="50" fill="none" stroke="url(#gI)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
-                        <defs>
-                            <linearGradient id="gP" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="#6366f1"/>
-                                <stop offset="100%" stop-color="#8b5cf6"/>
-                            </linearGradient>
-                            <linearGradient id="gI" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="#f97316"/>
-                                <stop offset="100%" stop-color="#ef4444"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    <div class="center">
-                        <div class="num" id="donutNum">—</div>
-                        <div class="lbl">celkem</div>
+            <div class="grid">
+                <div class="card anim-2">
+                    <div class="card-title"><span class="icon">⚙️</span> Parametry</div>
+
+                    <div class="input-group">
+                        <label>Cena nemovitosti <span class="val" id="priceVal">4 000 000 Kč</span></label>
+                        <div class="input-row">
+                            <input type="number" id="price" value="4000000" min="500000" max="20000000" step="100000">
+                            <input type="range" id="priceR" min="500000" max="20000000" step="100000" value="4000000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Vlastní prostředky <span class="val" id="downVal">800 000 Kč</span></label>
+                        <div class="input-row">
+                            <input type="number" id="down" value="800000" min="0" max="19000000" step="50000">
+                            <input type="range" id="downR" min="0" max="19000000" step="50000" value="800000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Úroková sazba <span class="val" id="rateVal">5,5 %</span></label>
+                        <div class="input-row">
+                            <input type="number" id="rate" value="5.5" min="0.1" max="15" step="0.1">
+                            <input type="range" id="rateR" min="0.1" max="15" step="0.1" value="5.5">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Doba splácení <span class="val" id="yearsVal">30 let</span></label>
+                        <div class="input-row">
+                            <input type="number" id="years" value="30" min="1" max="40" step="1">
+                            <input type="range" id="yearsR" min="1" max="40" step="1" value="30">
+                        </div>
                     </div>
                 </div>
-                <div class="legend">
-                    <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
-                    <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
+
+                <div class="card anim-3">
+                    <div class="card-title"><span class="icon">📊</span> Výsledky</div>
+
+                    <div class="results">
+                        <div class="result-box main">
+                            <div class="result-label">Měsíční splátka</div>
+                            <div class="result-value" id="monthly">—</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Výše hypotéky</div>
+                            <div class="result-value" id="loan">—</div>
+                            <div class="result-sub">cena − vlastní prostředky</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Celkem zaplaceno</div>
+                            <div class="result-value" id="total">—</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Přeplatek (úroky)</div>
+                            <div class="result-value" id="over">—</div>
+                            <div class="result-sub" id="overPct"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-wrap">
+                        <div class="donut">
+                            <svg viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+                                <circle id="arcP" cx="60" cy="60" r="50" fill="none" stroke="url(#gP)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                                <circle id="arcI" cx="60" cy="60" r="50" fill="none" stroke="url(#gI)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                                <defs>
+                                    <linearGradient id="gP" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#6366f1"/>
+                                        <stop offset="100%" stop-color="#8b5cf6"/>
+                                    </linearGradient>
+                                    <linearGradient id="gI" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#f97316"/>
+                                        <stop offset="100%" stop-color="#ef4444"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="center">
+                                <div class="num" id="donutNum">—</div>
+                                <div class="lbl">celkem</div>
+                            </div>
+                        </div>
+                        <div class="legend">
+                            <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
+                            <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card full-width anim-4">
+                    <div class="card-title"><span class="icon">📈</span> Rozložení splátek po letech</div>
+                    <div class="legend" style="margin-bottom:4px;">
+                        <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
+                        <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
+                    </div>
+                    <div class="bar-chart" id="bars"></div>
                 </div>
             </div>
         </div>
 
-        <!-- BAR CHART -->
-        <div class="card full-width anim-4">
-            <div class="card-title"><span class="icon">📈</span> Rozložení splátek po letech</div>
-            <div class="legend" style="margin-bottom:4px;">
-                <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
-                <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
-            </div>
-            <div class="bar-chart" id="bars"></div>
-        </div>
-    </div>
+        <!-- ════════════════════════════════════════════
+             PAGE 2: INVESTIČNÍ KALKULAČKA
+        ════════════════════════════════════════════ -->
+        <div class="page" id="page-invest">
 
-    <div class="footer anim-4">Workshop MGO · 2026 · Vibe Coding</div>
+            <div class="header anim-1">
+                <span class="badge green">Investiční kalkulačka</span>
+                <h1>📈 Spočítej si <span class="hl-green">výnos investice</span></h1>
+                <p>Zjisti, kolik vyděláš pravidelným investováním. Zadej počáteční vklad, měsíční příspěvek, výnos a dobu — a sleduj sílu složeného úročení.</p>
+            </div>
+
+            <div class="grid">
+                <div class="card anim-2">
+                    <div class="card-title"><span class="icon">⚙️</span> Parametry investice</div>
+
+                    <div class="input-group">
+                        <label>Počáteční vklad <span class="val green-val" id="ivInitVal">100 000 Kč</span></label>
+                        <div class="input-row">
+                            <input type="number" id="ivInit" value="100000" min="0" max="10000000" step="10000">
+                            <input type="range" id="ivInitR" min="0" max="10000000" step="10000" value="100000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Měsíční vklad <span class="val green-val" id="ivMonthVal">5 000 Kč</span></label>
+                        <div class="input-row">
+                            <input type="number" id="ivMonth" value="5000" min="0" max="200000" step="500">
+                            <input type="range" id="ivMonthR" min="0" max="200000" step="500" value="5000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Roční výnos <span class="val green-val" id="ivRateVal">7,0 %</span></label>
+                        <div class="input-row">
+                            <input type="number" id="ivRate" value="7" min="0.1" max="30" step="0.1">
+                            <input type="range" id="ivRateR" min="0.1" max="30" step="0.1" value="7">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Doba investování <span class="val green-val" id="ivYearsVal">20 let</span></label>
+                        <div class="input-row">
+                            <input type="number" id="ivYears" value="20" min="1" max="50" step="1">
+                            <input type="range" id="ivYearsR" min="1" max="50" step="1" value="20">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card anim-3">
+                    <div class="card-title"><span class="icon">📊</span> Výsledky</div>
+
+                    <div class="results">
+                        <div class="result-box main-green">
+                            <div class="result-label">Celková hodnota</div>
+                            <div class="result-value" id="ivTotal">—</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Celkem vloženo</div>
+                            <div class="result-value" id="ivDeposited">—</div>
+                            <div class="result-sub">počáteční + měsíční vklady</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Čistý výnos</div>
+                            <div class="result-value" id="ivProfit">—</div>
+                            <div class="result-sub" id="ivProfitPct"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-wrap">
+                        <div class="donut">
+                            <svg viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+                                <circle id="ivArcD" cx="60" cy="60" r="50" fill="none" stroke="url(#gD)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                                <circle id="ivArcR" cx="60" cy="60" r="50" fill="none" stroke="url(#gR)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                                <defs>
+                                    <linearGradient id="gD" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#22c55e"/>
+                                        <stop offset="100%" stop-color="#0d9488"/>
+                                    </linearGradient>
+                                    <linearGradient id="gR" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#06b6d4"/>
+                                        <stop offset="100%" stop-color="#2563eb"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="center">
+                                <div class="num" id="ivDonutNum">—</div>
+                                <div class="lbl">celkem</div>
+                            </div>
+                        </div>
+                        <div class="legend">
+                            <div class="legend-item"><span class="legend-dot dot-deposit"></span> Vklady</div>
+                            <div class="legend-item"><span class="legend-dot dot-profit"></span> Výnosy</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card full-width anim-4">
+                    <div class="card-title"><span class="icon">📈</span> Růst investice po letech</div>
+                    <div class="legend" style="margin-bottom:4px;">
+                        <div class="legend-item"><span class="legend-dot dot-deposit"></span> Vklady</div>
+                        <div class="legend-item"><span class="legend-dot dot-profit"></span> Výnosy</div>
+                    </div>
+                    <div class="bar-chart" id="ivBars"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <script>
     (() => {
-        /* ── helpers ── */
         const $ = id => document.getElementById(id);
         const fmt = n => Math.round(n).toLocaleString('cs-CZ') + ' Kč';
         const fmtShort = n => {
@@ -606,23 +853,49 @@
             return Math.round(n) + ' Kč';
         };
 
-        /* ── sync pairs ── */
-        const pairs = [
+        /* ══════════════════════════════════════
+           SIDEBAR NAV & PAGES
+        ══════════════════════════════════════ */
+        window.switchPage = function(pageId, el) {
+            event.preventDefault();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            $('page-' + pageId).classList.add('active');
+            el.classList.add('active');
+            // Close mobile sidebar
+            $('sidebar').classList.remove('open');
+            $('overlay').classList.remove('show');
+            // Re-trigger animations
+            $('page-' + pageId).querySelectorAll('[class*="anim-"]').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // force reflow
+                el.style.animation = '';
+            });
+        };
+
+        window.toggleSidebar = function() {
+            $('sidebar').classList.toggle('open');
+            $('overlay').classList.toggle('show');
+        };
+
+        /* ══════════════════════════════════════
+           MORTGAGE CALCULATOR
+        ══════════════════════════════════════ */
+        const mPairs = [
             ['price', 'priceR', 'priceVal', v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
             ['down',  'downR',  'downVal',  v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
             ['rate',  'rateR',  'rateVal',  v => parseFloat(v).toFixed(1).replace('.', ',') + ' %'],
             ['years', 'yearsR', 'yearsVal', v => v + ' let'],
         ];
 
-        pairs.forEach(([inp, rng, lbl, format]) => {
+        mPairs.forEach(([inp, rng, lbl, format]) => {
             const i = $(inp), r = $(rng), l = $(lbl);
             const sync = () => { l.textContent = format(i.value); };
-            i.addEventListener('input', () => { r.value = i.value; sync(); calc(); });
-            r.addEventListener('input', () => { i.value = r.value; sync(); calc(); });
+            i.addEventListener('input', () => { r.value = i.value; sync(); calcMortgage(); });
+            r.addEventListener('input', () => { i.value = r.value; sync(); calcMortgage(); });
         });
 
-        /* ── main calculation ── */
-        function calc() {
+        function calcMortgage() {
             const P = parseFloat($('price').value) - parseFloat($('down').value);
             const r = parseFloat($('rate').value) / 100 / 12;
             const n = parseInt($('years').value) * 12;
@@ -646,25 +919,21 @@
             $('over').textContent = fmt(interest);
             $('overPct').textContent = (interest / P * 100).toFixed(1).replace('.', ',') + ' % z jistiny';
 
-            donut(P, interest, tot);
-            barChart(P, r, n, M);
-        }
-
-        /* ── donut ── */
-        function donut(principal, interest, total) {
+            // Donut
             const C = 2 * Math.PI * 50;
-            const pLen = (principal / total) * C;
-            const iLen = (interest / total) * C;
-
+            const pLen = (P / tot) * C;
+            const iLen = (interest / tot) * C;
             $('arcP').style.strokeDasharray = pLen + ' ' + C;
             $('arcP').style.strokeDashoffset = '0';
             $('arcI').style.strokeDasharray = iLen + ' ' + C;
             $('arcI').style.strokeDashoffset = -pLen;
-            $('donutNum').textContent = fmtShort(total);
+            $('donutNum').textContent = fmtShort(tot);
+
+            // Bar chart
+            mortgageBars(P, r, n, M);
         }
 
-        /* ── bar chart ── */
-        function barChart(P, r, n, M) {
+        function mortgageBars(P, r, n, M) {
             const el = $('bars');
             el.innerHTML = '';
             const totalYears = Math.ceil(n / 12);
@@ -690,43 +959,119 @@
                 const pPct = (d.p / tot) * 100;
                 const iPct = 100 - pPct;
 
-                const col = document.createElement('div');
-                col.className = 'bar-col';
-
-                const tip = document.createElement('div');
-                tip.className = 'bar-tip';
+                const col = document.createElement('div'); col.className = 'bar-col';
+                const tip = document.createElement('div'); tip.className = 'bar-tip';
                 tip.innerHTML = 'Rok ' + d.yr + '<br>Jistina: ' + fmt(d.p) + '<br>Úroky: ' + fmt(d.i);
-
-                const stack = document.createElement('div');
-                stack.className = 'bar-stack';
-                stack.style.height = hPct + '%';
-
-                const bi = document.createElement('div');
-                bi.className = 'bar-i';
-                bi.style.height = iPct + '%';
-
-                const bp = document.createElement('div');
-                bp.className = 'bar-p';
-                bp.style.height = pPct + '%';
-
-                stack.appendChild(bi);
-                stack.appendChild(bp);
-
-                const lbl = document.createElement('div');
-                lbl.className = 'bar-yr';
-                // Show every Nth label to avoid crowding
+                const stack = document.createElement('div'); stack.className = 'bar-stack'; stack.style.height = hPct + '%';
+                const bi = document.createElement('div'); bi.className = 'bar-i'; bi.style.height = iPct + '%';
+                const bp = document.createElement('div'); bp.className = 'bar-p'; bp.style.height = pPct + '%';
+                stack.appendChild(bi); stack.appendChild(bp);
+                const lbl = document.createElement('div'); lbl.className = 'bar-yr';
                 const step = totalYears > 25 ? 5 : totalYears > 15 ? 3 : totalYears > 8 ? 2 : 1;
                 lbl.textContent = (d.yr % step === 0 || d.yr === 1 || d.yr === totalYears) ? d.yr : '';
-
-                col.appendChild(tip);
-                col.appendChild(stack);
-                col.appendChild(lbl);
+                col.appendChild(tip); col.appendChild(stack); col.appendChild(lbl);
                 el.appendChild(col);
             });
         }
 
-        /* ── init ── */
-        calc();
+        calcMortgage();
+
+        /* ══════════════════════════════════════
+           INVESTMENT CALCULATOR
+        ══════════════════════════════════════ */
+        const iPairs = [
+            ['ivInit',  'ivInitR',  'ivInitVal',  v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
+            ['ivMonth', 'ivMonthR', 'ivMonthVal', v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
+            ['ivRate',  'ivRateR',  'ivRateVal',  v => parseFloat(v).toFixed(1).replace('.', ',') + ' %'],
+            ['ivYears', 'ivYearsR', 'ivYearsVal', v => v + ' let'],
+        ];
+
+        iPairs.forEach(([inp, rng, lbl, format]) => {
+            const i = $(inp), r = $(rng), l = $(lbl);
+            const sync = () => { l.textContent = format(i.value); };
+            i.addEventListener('input', () => { r.value = i.value; sync(); calcInvest(); });
+            r.addEventListener('input', () => { i.value = r.value; sync(); calcInvest(); });
+        });
+
+        function calcInvest() {
+            const init = parseFloat($('ivInit').value);
+            const monthly = parseFloat($('ivMonth').value);
+            const annualRate = parseFloat($('ivRate').value) / 100;
+            const monthlyRate = annualRate / 12;
+            const years = parseInt($('ivYears').value);
+            const months = years * 12;
+
+            // Future value of lump sum + future value of annuity
+            let totalValue = init * Math.pow(1 + monthlyRate, months);
+            if (monthlyRate > 0) {
+                totalValue += monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+            } else {
+                totalValue += monthly * months;
+            }
+
+            const deposited = init + monthly * months;
+            const profit = totalValue - deposited;
+
+            $('ivTotal').textContent = fmt(totalValue);
+            $('ivDeposited').textContent = fmt(deposited);
+            $('ivProfit').textContent = fmt(profit);
+            $('ivProfitPct').textContent = deposited > 0
+                ? '+' + (profit / deposited * 100).toFixed(1).replace('.', ',') + ' % zhodnocení'
+                : '';
+
+            // Donut
+            const C = 2 * Math.PI * 50;
+            const dLen = (deposited / totalValue) * C;
+            const rLen = (profit / totalValue) * C;
+            $('ivArcD').style.strokeDasharray = dLen + ' ' + C;
+            $('ivArcD').style.strokeDashoffset = '0';
+            $('ivArcR').style.strokeDasharray = rLen + ' ' + C;
+            $('ivArcR').style.strokeDashoffset = -dLen;
+            $('ivDonutNum').textContent = fmtShort(totalValue);
+
+            // Bar chart
+            investBars(init, monthly, monthlyRate, years);
+        }
+
+        function investBars(init, monthly, monthlyRate, years) {
+            const el = $('ivBars');
+            el.innerHTML = '';
+            let balance = init;
+            let totalDeposited = init;
+            let maxVal = 0;
+            const data = [];
+
+            for (let y = 1; y <= years; y++) {
+                for (let m = 0; m < 12; m++) {
+                    balance = balance * (1 + monthlyRate) + monthly;
+                    totalDeposited += monthly;
+                }
+                const profit = balance - totalDeposited;
+                data.push({ yr: y, dep: totalDeposited, prof: Math.max(0, profit), total: balance });
+                if (balance > maxVal) maxVal = balance;
+            }
+
+            data.forEach(d => {
+                const hPct = (d.total / maxVal) * 100;
+                const depPct = (d.dep / d.total) * 100;
+                const profPct = 100 - depPct;
+
+                const col = document.createElement('div'); col.className = 'bar-col';
+                const tip = document.createElement('div'); tip.className = 'bar-tip';
+                tip.innerHTML = 'Rok ' + d.yr + '<br>Vklady: ' + fmt(d.dep) + '<br>Výnosy: ' + fmt(d.prof) + '<br>Celkem: ' + fmt(d.total);
+                const stack = document.createElement('div'); stack.className = 'bar-stack'; stack.style.height = hPct + '%';
+                const bd = document.createElement('div'); bd.className = 'bar-dep'; bd.style.height = depPct + '%';
+                const bp = document.createElement('div'); bp.className = 'bar-prof'; bp.style.height = profPct + '%';
+                stack.appendChild(bp); stack.appendChild(bd);
+                const lbl = document.createElement('div'); lbl.className = 'bar-yr';
+                const step = years > 30 ? 5 : years > 15 ? 3 : years > 8 ? 2 : 1;
+                lbl.textContent = (d.yr % step === 0 || d.yr === 1 || d.yr === years) ? d.yr : '';
+                col.appendChild(tip); col.appendChild(stack); col.appendChild(lbl);
+                el.appendChild(col);
+            });
+        }
+
+        calcInvest();
     })();
     </script>
 </body>
