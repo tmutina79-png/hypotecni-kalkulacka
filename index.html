@@ -360,17 +360,21 @@
 
         /* ── RESULTS ── */
         .results {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .results .result-box:first-child {
+            grid-column: 1 / -1;
         }
 
         .result-box {
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 18px 22px;
+            padding: 14px 16px;
             text-align: center;
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -401,13 +405,13 @@
 
         .result-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--text);
         }
 
         .result-box.main .result-value {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             background: linear-gradient(135deg, var(--primary), #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -415,7 +419,7 @@
         }
 
         .result-box.main-green .result-value {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             background: linear-gradient(135deg, var(--green), #0d9488);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -432,8 +436,8 @@
         .chart-wrap { text-align: center; }
 
         .donut {
-            width: 180px; height: 180px;
-            margin: 0 auto 18px;
+            width: 140px; height: 140px;
+            margin: 0 auto 14px;
             position: relative;
         }
 
@@ -446,7 +450,7 @@
 
         .donut .center .num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem; font-weight: 700; color: var(--text);
+            font-size: 0.85rem; font-weight: 700; color: var(--text);
         }
 
         .donut .center .lbl { font-size: 0.68rem; color: var(--text3); }
@@ -470,7 +474,7 @@
         /* ── BAR CHART ── */
         .bar-chart {
             display: flex; align-items: flex-end; gap: 3px;
-            height: 200px; margin-top: 18px; padding-bottom: 24px;
+            height: 150px; margin-top: 18px; padding-bottom: 24px;
             position: relative;
         }
 
