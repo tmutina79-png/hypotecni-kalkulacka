@@ -540,6 +540,145 @@
             text-transform: uppercase; letter-spacing: 0.05em;
         }
 
+        /* ── HOME PAGE ── */
+        .home-hero {
+            text-align: center;
+            max-width: 680px;
+            margin: 60px auto 48px;
+        }
+
+        .home-hero .hero-icon {
+            width: 80px; height: 80px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6, #06b6d4);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem; color: #fff;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 32px rgba(99,102,241,0.25);
+        }
+
+        .home-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .home-hero p {
+            color: var(--text2);
+            font-size: 1.1rem;
+            line-height: 1.65;
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        .home-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 780px;
+            margin: 0 auto 48px;
+        }
+
+        .home-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .home-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .home-card .hc-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .home-card .hc-icon.purple {
+            background: var(--primary-light);
+        }
+
+        .home-card .hc-icon.green {
+            background: var(--green-light);
+        }
+
+        .home-card h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .home-card p {
+            font-size: 0.88rem;
+            color: var(--text2);
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+
+        .home-card .hc-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .home-card:nth-child(2) .hc-btn { color: var(--green); }
+
+        .home-footer {
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .home-footer p {
+            font-size: 0.85rem;
+            color: var(--text3);
+            line-height: 1.6;
+        }
+
+        .home-footer .tech-badges {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .home-footer .tech-badge {
+            display: inline-block;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px 14px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text2);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        @media (max-width: 600px) {
+            .home-cards { grid-template-columns: 1fr; }
+            .home-hero { margin: 32px auto 32px; }
+        }
+
         /* ── ANIMATIONS ── */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(16px); }
@@ -589,20 +728,20 @@
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-brand">
+        <a href="#" class="sidebar-brand" onclick="switchHome(event)" style="text-decoration:none;color:inherit;">
             <div class="brand-icon">💰</div>
             <div>
                 <div class="brand-text">Finanční kalkulačky</div>
                 <div class="brand-sub">Workshop MGO 2026</div>
             </div>
-        </div>
+        </a>
 
         <div class="sidebar-label">Kalkulačky</div>
         <ul class="sidebar-nav">
             <li><a href="#" data-page="mortgage" onclick="switchPage('mortgage', this)">
                 <span class="nav-icon">🏠</span> Hypoteční kalkulačka
             </a></li>
-            <li><a href="#" class="active" data-page="invest" onclick="switchPage('invest', this)">
+            <li><a href="#" data-page="invest" onclick="switchPage('invest', this)">
                 <span class="nav-icon">📈</span> Investiční kalkulačka
             </a></li>
         </ul>
@@ -624,6 +763,43 @@
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://tmutina79-png.github.io/hypotecni-kalkulacka/" alt="QR kód">
             <div class="qr-label">Sdílej odkaz</div>
         </a>
+
+        <!-- ════════════════════════════════════════════
+             HLAVNÍ STRÁNKA
+        ════════════════════════════════════════════ -->
+        <div class="page active" id="page-home">
+
+            <div class="home-hero anim-1">
+                <div class="hero-icon">💰</div>
+                <h1>Finanční <span class="hl">kalkulačky</span></h1>
+                <p>Interaktivní nástroje pro rychlé finanční výpočty. Spočítej si hypotéku, naplánuj investici — vše přehledně na jednom místě.</p>
+            </div>
+
+            <div class="home-cards">
+                <a class="home-card anim-2" onclick="switchPage('mortgage', document.querySelector('[data-page=mortgage]'))">
+                    <div class="hc-icon purple">🏠</div>
+                    <h3>Hypoteční kalkulačka</h3>
+                    <p>Zjisti měsíční splátku, celkovou cenu hypotéky a přeplatek. Porovnej různé scénáře úrokových sazeb a dob splácení.</p>
+                    <div class="hc-btn">Spočítat hypotéku →</div>
+                </a>
+                <a class="home-card anim-3" onclick="switchPage('invest', document.querySelector('[data-page=invest]'))">
+                    <div class="hc-icon green">📈</div>
+                    <h3>Investiční kalkulačka</h3>
+                    <p>Spočítej si výnos pravidelného investování. Podívej se, jak síla složeného úročení pracuje s tvými penězi.</p>
+                    <div class="hc-btn">Spočítat investici →</div>
+                </a>
+            </div>
+
+            <div class="home-footer anim-4">
+                <p>Vytvořeno v rámci <strong>Workshop MGO 2026</strong> — Vibe Coding session.<br>Všechny výpočty probíhají lokálně ve tvém prohlížeči.</p>
+                <div class="tech-badges">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">Vanilla JS</span>
+                    <span class="tech-badge">GitHub Pages</span>
+                </div>
+            </div>
+        </div>
 
         <!-- ════════════════════════════════════════════
              HYPOTEČNÍ KALKULAČKA
@@ -736,7 +912,7 @@
         <!-- ════════════════════════════════════════════
              INVESTIČNÍ KALKULAČKA
         ════════════════════════════════════════════ -->
-        <div class="page active" id="page-invest">
+        <div class="page" id="page-invest">
 
             <div class="header anim-1">
                 <span class="badge green">Investiční kalkulačka</span>
@@ -856,6 +1032,18 @@
         /* ══════════════════════════════════════
            SIDEBAR NAV & PAGES
         ══════════════════════════════════════ */
+        window.switchHome = function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            $('page-home').classList.add('active');
+            $('sidebar').classList.remove('open');
+            $('overlay').classList.remove('show');
+            $('page-home').querySelectorAll('[class*="anim-"]').forEach(el => {
+                el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
+            });
+        };
+
         window.switchPage = function(pageId, el) {
             event.preventDefault();
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
