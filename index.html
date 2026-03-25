@@ -366,10 +366,6 @@
             margin-bottom: 20px;
         }
 
-        .results.mortgage-results {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-
         .results .result-box:first-child {
             grid-column: 1 / -1;
         }
@@ -575,10 +571,6 @@
         @media (max-width: 600px) {
             .qr-box { top: 10px; right: 10px; padding: 8px; }
             .qr-box img { width: 70px; height: 70px; }
-
-            .results.mortgage-results {
-                grid-template-columns: 1fr 1fr;
-            }
         }
 
         @media (max-width: 480px) {
@@ -688,15 +680,11 @@
                 <div class="card anim-3">
                     <div class="card-title"><span class="icon">📊</span> Výsledky</div>
 
-                    <div class="results mortgage-results">
+                    <div class="results">
                         <div class="result-box main">
                             <div class="result-label">Měsíční splátka</div>
                             <div class="result-value" id="monthly">—</div>
-                        </div>
-                        <div class="result-box">
-                            <div class="result-label">Výše hypotéky</div>
-                            <div class="result-value" id="loan">—</div>
-                            <div class="result-sub">cena − vlastní prostředky</div>
+                            <div class="result-sub">výše hypotéky: <span id="loan">—</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label">Celkem zaplaceno</div>
