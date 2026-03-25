@@ -177,7 +177,7 @@
             margin-left: var(--sidebar-w);
             flex: 1;
             min-height: 100vh;
-            padding: 32px 24px 64px;
+            padding: 32px 32px 64px;
         }
 
         /* Pages */
@@ -387,7 +387,6 @@
         .result-box.main {
             background: linear-gradient(135deg, #eef2ff, #e0e7ff);
             border-color: #c7d2fe;
-            padding: 10px 14px;
         }
 
         .result-box.main-green {
@@ -412,15 +411,12 @@
         }
 
         .result-box.main .result-value {
-            font-size: 1.35rem;
-            line-height: 1.1;
+            font-size: 1.6rem;
             background: linear-gradient(135deg, var(--primary), #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .result-box.main .result-label { margin-bottom: 2px; }
 
         .result-box.main-green .result-value {
             font-size: 1.6rem;
@@ -530,34 +526,35 @@
             margin-bottom: 28px;
         }
 
-        #page-mortgage .result-box {
+        #page-mortgage .results .result-box {
             padding: 18px 22px;
         }
 
-        #page-mortgage .result-box.main {
+        #page-mortgage .results .result-box.main {
             padding: 18px 22px;
+            border-color: #c7d2fe;
         }
 
-        #page-mortgage .result-box.main .result-label {
+        #page-mortgage .results .result-box.main .result-label {
             margin-bottom: 4px;
         }
 
-        #page-mortgage .result-value {
+        #page-mortgage .results .result-value {
             font-size: 1.5rem;
         }
 
-        #page-mortgage .result-box.main .result-value {
+        #page-mortgage .results .result-box.main .result-value {
             font-size: 1.9rem;
             line-height: normal;
         }
 
-        #page-mortgage .donut {
+        #page-mortgage .chart-wrap .donut {
             width: 180px;
             height: 180px;
             margin: 0 auto 18px;
         }
 
-        #page-mortgage .donut .center .num {
+        #page-mortgage .chart-wrap .donut .center .num {
             font-size: 1rem;
         }
 
