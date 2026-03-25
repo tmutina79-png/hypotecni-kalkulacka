@@ -518,50 +518,6 @@
 
         .bar-col:hover .bar-tip { display: block; }
 
-        /* ── MORTGAGE PAGE OVERRIDES (original design) ── */
-        #page-mortgage .results {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 28px;
-        }
-
-        #page-mortgage .results .result-box {
-            padding: 18px 22px;
-        }
-
-        #page-mortgage .results .result-box.main {
-            padding: 18px 22px;
-            border-color: #c7d2fe;
-        }
-
-        #page-mortgage .results .result-box.main .result-label {
-            margin-bottom: 4px;
-        }
-
-        #page-mortgage .results .result-value {
-            font-size: 1.5rem;
-        }
-
-        #page-mortgage .results .result-box.main .result-value {
-            font-size: 1.9rem;
-            line-height: normal;
-        }
-
-        #page-mortgage .chart-wrap .donut {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 18px;
-        }
-
-        #page-mortgage .chart-wrap .donut .center .num {
-            font-size: 1rem;
-        }
-
-        #page-mortgage .bar-chart {
-            height: 200px;
-        }
-
         /* ── QR CODE ── */
         .qr-box {
             position: fixed; top: 20px; right: 20px;
@@ -643,10 +599,7 @@
 
         <div class="sidebar-label">Kalkulačky</div>
         <ul class="sidebar-nav">
-            <li><a href="#" class="active" data-page="mortgage" onclick="switchPage('mortgage', this)">
-                <span class="nav-icon">🏠</span> Hypoteční kalkulačka
-            </a></li>
-            <li><a href="#" data-page="invest" onclick="switchPage('invest', this)">
+            <li><a href="#" class="active" data-page="invest" onclick="switchPage('invest', this)">
                 <span class="nav-icon">📈</span> Investiční kalkulačka
             </a></li>
         </ul>
@@ -670,121 +623,9 @@
         </a>
 
         <!-- ════════════════════════════════════════════
-             PAGE 1: HYPOTEČNÍ KALKULAČKA
+             INVESTIČNÍ KALKULAČKA
         ════════════════════════════════════════════ -->
-        <div class="page active" id="page-mortgage">
-
-            <div class="header anim-1">
-                <span class="badge">Hypoteční kalkulačka</span>
-                <h1>🏠 Spočítej si <span class="hl">splátku hypotéky</span></h1>
-                <p>Zadej parametry a výsledek se přepočítá automaticky. Vše na jednom místě — splátka, přeplatek i graf.</p>
-            </div>
-
-            <div class="grid">
-                <div class="card anim-2">
-                    <div class="card-title"><span class="icon">⚙️</span> Parametry</div>
-
-                    <div class="input-group">
-                        <label>Cena nemovitosti <span class="val" id="priceVal">4 000 000 Kč</span></label>
-                        <div class="input-row">
-                            <input type="number" id="price" value="4000000" min="500000" max="20000000" step="100000">
-                            <input type="range" id="priceR" min="500000" max="20000000" step="100000" value="4000000">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Vlastní prostředky <span class="val" id="downVal">800 000 Kč</span></label>
-                        <div class="input-row">
-                            <input type="number" id="down" value="800000" min="0" max="19000000" step="50000">
-                            <input type="range" id="downR" min="0" max="19000000" step="50000" value="800000">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Úroková sazba <span class="val" id="rateVal">5,5 %</span></label>
-                        <div class="input-row">
-                            <input type="number" id="rate" value="5.5" min="0.1" max="15" step="0.1">
-                            <input type="range" id="rateR" min="0.1" max="15" step="0.1" value="5.5">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Doba splácení <span class="val" id="yearsVal">30 let</span></label>
-                        <div class="input-row">
-                            <input type="number" id="years" value="30" min="1" max="40" step="1">
-                            <input type="range" id="yearsR" min="1" max="40" step="1" value="30">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card anim-3">
-                    <div class="card-title"><span class="icon">📊</span> Výsledky</div>
-
-                    <div class="results">
-                        <div class="result-box main">
-                            <div class="result-label">Měsíční splátka</div>
-                            <div class="result-value" id="monthly">—</div>
-                        </div>
-                        <div class="result-box">
-                            <div class="result-label">Výše hypotéky</div>
-                            <div class="result-value" id="loan">—</div>
-                            <div class="result-sub">cena − vlastní prostředky</div>
-                        </div>
-                        <div class="result-box">
-                            <div class="result-label">Celkem zaplaceno</div>
-                            <div class="result-value" id="total">—</div>
-                        </div>
-                        <div class="result-box">
-                            <div class="result-label">Přeplatek (úroky)</div>
-                            <div class="result-value" id="over">—</div>
-                            <div class="result-sub" id="overPct"></div>
-                        </div>
-                    </div>
-
-                    <div class="chart-wrap">
-                        <div class="donut">
-                            <svg viewBox="0 0 120 120">
-                                <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
-                                <circle id="arcP" cx="60" cy="60" r="50" fill="none" stroke="url(#gP)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
-                                <circle id="arcI" cx="60" cy="60" r="50" fill="none" stroke="url(#gI)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
-                                <defs>
-                                    <linearGradient id="gP" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#6366f1"/>
-                                        <stop offset="100%" stop-color="#8b5cf6"/>
-                                    </linearGradient>
-                                    <linearGradient id="gI" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#f97316"/>
-                                        <stop offset="100%" stop-color="#ef4444"/>
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                            <div class="center">
-                                <div class="num" id="donutNum">—</div>
-                                <div class="lbl">celkem</div>
-                            </div>
-                        </div>
-                        <div class="legend">
-                            <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
-                            <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card full-width anim-4">
-                    <div class="card-title"><span class="icon">📈</span> Rozložení splátek po letech</div>
-                    <div class="legend" style="margin-bottom:4px;">
-                        <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
-                        <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
-                    </div>
-                    <div class="bar-chart" id="bars"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ════════════════════════════════════════════
-             PAGE 2: INVESTIČNÍ KALKULAČKA
-        ════════════════════════════════════════════ -->
-        <div class="page" id="page-invest">
+        <div class="page active" id="page-invest">
 
             <div class="header anim-1">
                 <span class="badge green">Investiční kalkulačka</span>
@@ -925,104 +766,6 @@
             $('sidebar').classList.toggle('open');
             $('overlay').classList.toggle('show');
         };
-
-        /* ══════════════════════════════════════
-           MORTGAGE CALCULATOR
-        ══════════════════════════════════════ */
-        const mPairs = [
-            ['price', 'priceR', 'priceVal', v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
-            ['down',  'downR',  'downVal',  v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
-            ['rate',  'rateR',  'rateVal',  v => parseFloat(v).toFixed(1).replace('.', ',') + ' %'],
-            ['years', 'yearsR', 'yearsVal', v => v + ' let'],
-        ];
-
-        mPairs.forEach(([inp, rng, lbl, format]) => {
-            const i = $(inp), r = $(rng), l = $(lbl);
-            const sync = () => { l.textContent = format(i.value); };
-            i.addEventListener('input', () => { r.value = i.value; sync(); calcMortgage(); });
-            r.addEventListener('input', () => { i.value = r.value; sync(); calcMortgage(); });
-        });
-
-        function calcMortgage() {
-            const P = parseFloat($('price').value) - parseFloat($('down').value);
-            const r = parseFloat($('rate').value) / 100 / 12;
-            const n = parseInt($('years').value) * 12;
-
-            if (P <= 0 || r <= 0 || n <= 0) {
-                $('monthly').textContent = '—';
-                $('loan').textContent = P > 0 ? fmt(P) : '0 Kč';
-                $('total').textContent = '—';
-                $('over').textContent = '—';
-                $('overPct').textContent = '';
-                return;
-            }
-
-            const M = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-            const tot = M * n;
-            const interest = tot - P;
-
-            $('monthly').textContent = fmt(M);
-            $('loan').textContent = fmt(P);
-            $('total').textContent = fmt(tot);
-            $('over').textContent = fmt(interest);
-            $('overPct').textContent = (interest / P * 100).toFixed(1).replace('.', ',') + ' % z jistiny';
-
-            // Donut
-            const C = 2 * Math.PI * 50;
-            const pLen = (P / tot) * C;
-            const iLen = (interest / tot) * C;
-            $('arcP').style.strokeDasharray = pLen + ' ' + C;
-            $('arcP').style.strokeDashoffset = '0';
-            $('arcI').style.strokeDasharray = iLen + ' ' + C;
-            $('arcI').style.strokeDashoffset = -pLen;
-            $('donutNum').textContent = fmtShort(tot);
-
-            // Bar chart
-            mortgageBars(P, r, n, M);
-        }
-
-        function mortgageBars(P, r, n, M) {
-            const el = $('bars');
-            el.innerHTML = '';
-            const totalYears = Math.ceil(n / 12);
-            let bal = P, maxY = 0;
-            const data = [];
-
-            for (let y = 1; y <= totalYears; y++) {
-                let yP = 0, yI = 0;
-                const months = Math.min(12, n - (y - 1) * 12);
-                for (let m = 0; m < months; m++) {
-                    const ip = bal * r;
-                    const pp = M - ip;
-                    yI += ip; yP += pp;
-                    bal = Math.max(0, bal - pp);
-                }
-                data.push({ yr: y, p: yP, i: yI });
-                if (yP + yI > maxY) maxY = yP + yI;
-            }
-
-            data.forEach(d => {
-                const tot = d.p + d.i;
-                const hPct = (tot / maxY) * 100;
-                const pPct = (d.p / tot) * 100;
-                const iPct = 100 - pPct;
-
-                const col = document.createElement('div'); col.className = 'bar-col';
-                const tip = document.createElement('div'); tip.className = 'bar-tip';
-                tip.innerHTML = 'Rok ' + d.yr + '<br>Jistina: ' + fmt(d.p) + '<br>Úroky: ' + fmt(d.i);
-                const stack = document.createElement('div'); stack.className = 'bar-stack'; stack.style.height = hPct + '%';
-                const bi = document.createElement('div'); bi.className = 'bar-i'; bi.style.height = iPct + '%';
-                const bp = document.createElement('div'); bp.className = 'bar-p'; bp.style.height = pPct + '%';
-                stack.appendChild(bi); stack.appendChild(bp);
-                const lbl = document.createElement('div'); lbl.className = 'bar-yr';
-                const step = totalYears > 25 ? 5 : totalYears > 15 ? 3 : totalYears > 8 ? 2 : 1;
-                lbl.textContent = (d.yr % step === 0 || d.yr === 1 || d.yr === totalYears) ? d.yr : '';
-                col.appendChild(tip); col.appendChild(stack); col.appendChild(lbl);
-                el.appendChild(col);
-            });
-        }
-
-        calcMortgage();
 
         /* ══════════════════════════════════════
            INVESTMENT CALCULATOR
