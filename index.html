@@ -522,6 +522,49 @@
 
         .bar-col:hover .bar-tip { display: block; }
 
+        /* ── MORTGAGE PAGE OVERRIDES (original design) ── */
+        #page-mortgage .results {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        #page-mortgage .result-box {
+            padding: 18px 22px;
+        }
+
+        #page-mortgage .result-box.main {
+            padding: 18px 22px;
+        }
+
+        #page-mortgage .result-box.main .result-label {
+            margin-bottom: 4px;
+        }
+
+        #page-mortgage .result-value {
+            font-size: 1.5rem;
+        }
+
+        #page-mortgage .result-box.main .result-value {
+            font-size: 1.9rem;
+            line-height: normal;
+        }
+
+        #page-mortgage .donut {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 18px;
+        }
+
+        #page-mortgage .donut .center .num {
+            font-size: 1rem;
+        }
+
+        #page-mortgage .bar-chart {
+            height: 200px;
+        }
+
         /* ── QR CODE ── */
         .qr-box {
             position: fixed; top: 20px; right: 20px;
@@ -684,7 +727,11 @@
                         <div class="result-box main">
                             <div class="result-label">Měsíční splátka</div>
                             <div class="result-value" id="monthly">—</div>
-                            <div class="result-sub">výše hypotéky: <span id="loan">—</span></div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Výše hypotéky</div>
+                            <div class="result-value" id="loan">—</div>
+                            <div class="result-sub">cena − vlastní prostředky</div>
                         </div>
                         <div class="result-box">
                             <div class="result-label">Celkem zaplaceno</div>
