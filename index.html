@@ -599,6 +599,9 @@
 
         <div class="sidebar-label">Kalkulačky</div>
         <ul class="sidebar-nav">
+            <li><a href="#" data-page="mortgage" onclick="switchPage('mortgage', this)">
+                <span class="nav-icon">🏠</span> Hypoteční kalkulačka
+            </a></li>
             <li><a href="#" class="active" data-page="invest" onclick="switchPage('invest', this)">
                 <span class="nav-icon">📈</span> Investiční kalkulačka
             </a></li>
@@ -621,6 +624,114 @@
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://tmutina79-png.github.io/hypotecni-kalkulacka/" alt="QR kód">
             <div class="qr-label">Sdílej odkaz</div>
         </a>
+
+        <!-- ════════════════════════════════════════════
+             HYPOTEČNÍ KALKULAČKA
+        ════════════════════════════════════════════ -->
+        <div class="page" id="page-mortgage">
+
+            <div class="header anim-1">
+                <span class="badge">Hypoteční kalkulačka</span>
+                <h1>🏠 Spočítej si <span class="hl">hypotéku</span></h1>
+                <p>Zadej cenu nemovitosti, vlastní prostředky, úrokovou sazbu a dobu splácení — a okamžitě uvidíš měsíční splátku, celkovou cenu i přeplatek.</p>
+            </div>
+
+            <div class="grid">
+                <div class="card anim-2">
+                    <div class="card-title"><span class="icon">⚙️</span> Parametry hypotéky</div>
+
+                    <div class="input-group">
+                        <label>Cena nemovitosti <span class="val" id="mgPriceVal">4 000 000 Kč</span></label>
+                        <div class="input-row">
+                            <input type="number" id="mgPrice" value="4000000" min="500000" max="30000000" step="100000">
+                            <input type="range" id="mgPriceR" min="500000" max="30000000" step="100000" value="4000000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Vlastní prostředky <span class="val" id="mgDownVal">800 000 Kč</span></label>
+                        <div class="input-row">
+                            <input type="number" id="mgDown" value="800000" min="0" max="30000000" step="50000">
+                            <input type="range" id="mgDownR" min="0" max="30000000" step="50000" value="800000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Úroková sazba <span class="val" id="mgRateVal">5,0 %</span></label>
+                        <div class="input-row">
+                            <input type="number" id="mgRate" value="5" min="0.1" max="15" step="0.1">
+                            <input type="range" id="mgRateR" min="0.1" max="15" step="0.1" value="5">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Doba splácení <span class="val" id="mgYearsVal">30 let</span></label>
+                        <div class="input-row">
+                            <input type="number" id="mgYears" value="30" min="1" max="40" step="1">
+                            <input type="range" id="mgYearsR" min="1" max="40" step="1" value="30">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card anim-3">
+                    <div class="card-title"><span class="icon">📊</span> Výsledky</div>
+
+                    <div class="results">
+                        <div class="result-box main">
+                            <div class="result-label">Měsíční splátka</div>
+                            <div class="result-value" id="mgPayment">—</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Celkem zaplaceno</div>
+                            <div class="result-value" id="mgTotal">—</div>
+                            <div class="result-sub">jistina + úroky</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-label">Přeplatek</div>
+                            <div class="result-value" id="mgOverpay">—</div>
+                            <div class="result-sub" id="mgOverpayPct"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-wrap">
+                        <div class="donut">
+                            <svg viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+                                <circle id="mgArcP" cx="60" cy="60" r="50" fill="none" stroke="url(#gMp)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                                <circle id="mgArcI" cx="60" cy="60" r="50" fill="none" stroke="url(#gMi)" stroke-width="18" stroke-dasharray="0 314" stroke-linecap="round"/>
+                                <defs>
+                                    <linearGradient id="gMp" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#6366f1"/>
+                                        <stop offset="100%" stop-color="#8b5cf6"/>
+                                    </linearGradient>
+                                    <linearGradient id="gMi" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#f97316"/>
+                                        <stop offset="100%" stop-color="#ef4444"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="center">
+                                <div class="num" id="mgDonutNum">—</div>
+                                <div class="lbl">splátka</div>
+                            </div>
+                        </div>
+                        <div class="legend">
+                            <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
+                            <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card full-width anim-4">
+                    <div class="card-title"><span class="icon">📊</span> Rozložení splátek po letech</div>
+                    <div class="legend" style="margin-bottom:4px;">
+                        <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
+                        <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
+                    </div>
+                    <div class="bar-chart" id="mgBars"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- ════════════════════════════════════════════
              INVESTIČNÍ KALKULAČKA
@@ -862,6 +973,111 @@
             });
         }
 
+        /* ══════════════════════════════════════
+           MORTGAGE CALCULATOR
+        ══════════════════════════════════════ */
+        const mPairs = [
+            ['mgPrice', 'mgPriceR', 'mgPriceVal', v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
+            ['mgDown',  'mgDownR',  'mgDownVal',  v => parseInt(v).toLocaleString('cs-CZ') + ' Kč'],
+            ['mgRate',  'mgRateR',  'mgRateVal',  v => parseFloat(v).toFixed(1).replace('.', ',') + ' %'],
+            ['mgYears', 'mgYearsR', 'mgYearsVal', v => v + ' let'],
+        ];
+
+        mPairs.forEach(([inp, rng, lbl, format]) => {
+            const i = $(inp), r = $(rng), l = $(lbl);
+            const sync = () => { l.textContent = format(i.value); };
+            i.addEventListener('input', () => { r.value = i.value; sync(); calcMortgage(); });
+            r.addEventListener('input', () => { i.value = r.value; sync(); calcMortgage(); });
+        });
+
+        function calcMortgage() {
+            const price = parseFloat($('mgPrice').value);
+            const down = parseFloat($('mgDown').value);
+            const annualRate = parseFloat($('mgRate').value) / 100;
+            const monthlyRate = annualRate / 12;
+            const years = parseInt($('mgYears').value);
+            const months = years * 12;
+            const principal = Math.max(0, price - down);
+
+            // Monthly payment (annuity formula)
+            let payment;
+            if (monthlyRate > 0) {
+                payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+            } else {
+                payment = principal / months;
+            }
+
+            const totalPaid = payment * months;
+            const overpay = totalPaid - principal;
+
+            $('mgPayment').textContent = fmt(payment);
+            $('mgTotal').textContent = fmt(totalPaid);
+            $('mgOverpay').textContent = fmt(overpay);
+            $('mgOverpayPct').textContent = principal > 0
+                ? '+' + (overpay / principal * 100).toFixed(1).replace('.', ',') + ' % přeplatek'
+                : '';
+
+            // Donut: jistina vs úroky
+            const C = 2 * Math.PI * 50;
+            if (totalPaid > 0) {
+                const pLen = (principal / totalPaid) * C;
+                const iLen = (overpay / totalPaid) * C;
+                $('mgArcP').style.strokeDasharray = pLen + ' ' + C;
+                $('mgArcP').style.strokeDashoffset = '0';
+                $('mgArcI').style.strokeDasharray = iLen + ' ' + C;
+                $('mgArcI').style.strokeDashoffset = -pLen;
+            }
+            $('mgDonutNum').textContent = fmtShort(payment);
+
+            // Bar chart
+            mortgageBars(principal, monthlyRate, payment, years);
+        }
+
+        function mortgageBars(principal, monthlyRate, payment, years) {
+            const el = $('mgBars');
+            el.innerHTML = '';
+            let balance = principal;
+            const data = [];
+            let maxVal = 0;
+
+            for (let y = 1; y <= years; y++) {
+                let yearPrincipal = 0;
+                let yearInterest = 0;
+                for (let m = 0; m < 12; m++) {
+                    if (balance <= 0) break;
+                    const interest = balance * monthlyRate;
+                    const princ = Math.min(payment - interest, balance);
+                    yearInterest += interest;
+                    yearPrincipal += princ;
+                    balance -= princ;
+                }
+                const yearTotal = yearPrincipal + yearInterest;
+                data.push({ yr: y, princ: yearPrincipal, interest: yearInterest, total: yearTotal });
+                if (yearTotal > maxVal) maxVal = yearTotal;
+            }
+
+            data.forEach(d => {
+                if (maxVal === 0) return;
+                const hPct = (d.total / maxVal) * 100;
+                const pPct = (d.princ / d.total) * 100;
+                const iPct = 100 - pPct;
+
+                const col = document.createElement('div'); col.className = 'bar-col';
+                const tip = document.createElement('div'); tip.className = 'bar-tip';
+                tip.innerHTML = 'Rok ' + d.yr + '<br>Jistina: ' + fmt(d.princ) + '<br>Úroky: ' + fmt(d.interest) + '<br>Celkem: ' + fmt(d.total);
+                const stack = document.createElement('div'); stack.className = 'bar-stack'; stack.style.height = hPct + '%';
+                const bp = document.createElement('div'); bp.className = 'bar-p'; bp.style.height = pPct + '%';
+                const bi = document.createElement('div'); bi.className = 'bar-i'; bi.style.height = iPct + '%';
+                stack.appendChild(bi); stack.appendChild(bp);
+                const lbl = document.createElement('div'); lbl.className = 'bar-yr';
+                const step = years > 30 ? 5 : years > 15 ? 3 : years > 8 ? 2 : 1;
+                lbl.textContent = (d.yr % step === 0 || d.yr === 1 || d.yr === years) ? d.yr : '';
+                col.appendChild(tip); col.appendChild(stack); col.appendChild(lbl);
+                el.appendChild(col);
+            });
+        }
+
+        calcMortgage();
         calcInvest();
     })();
     </script>
