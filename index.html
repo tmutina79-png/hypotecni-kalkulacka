@@ -433,6 +433,15 @@
         }
 
         /* ── DONUT CHART ── */
+        .results-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .results-row .results { margin-bottom: 0; }
+
         .chart-wrap { text-align: center; }
 
         .donut {
@@ -564,6 +573,10 @@
             .full-width { grid-column: 1; }
         }
 
+        @media (max-width: 720px) {
+            .results-row { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 600px) {
             .qr-box { top: 10px; right: 10px; padding: 8px; }
             .qr-box img { width: 70px; height: 70px; }
@@ -676,28 +689,29 @@
                 <div class="card anim-3">
                     <div class="card-title"><span class="icon">📊</span> Výsledky</div>
 
-                    <div class="results">
-                        <div class="result-box main">
-                            <div class="result-label">Měsíční splátka</div>
-                            <div class="result-value" id="monthly">—</div>
+                    <div class="results-row">
+                        <div class="results">
+                            <div class="result-box main">
+                                <div class="result-label">Měsíční splátka</div>
+                                <div class="result-value" id="monthly">—</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-label">Výše hypotéky</div>
+                                <div class="result-value" id="loan">—</div>
+                                <div class="result-sub">cena − vlastní prostředky</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-label">Celkem zaplaceno</div>
+                                <div class="result-value" id="total">—</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-label">Přeplatek (úroky)</div>
+                                <div class="result-value" id="over">—</div>
+                                <div class="result-sub" id="overPct"></div>
+                            </div>
                         </div>
-                        <div class="result-box">
-                            <div class="result-label">Výše hypotéky</div>
-                            <div class="result-value" id="loan">—</div>
-                            <div class="result-sub">cena − vlastní prostředky</div>
-                        </div>
-                        <div class="result-box">
-                            <div class="result-label">Celkem zaplaceno</div>
-                            <div class="result-value" id="total">—</div>
-                        </div>
-                        <div class="result-box">
-                            <div class="result-label">Přeplatek (úroky)</div>
-                            <div class="result-value" id="over">—</div>
-                            <div class="result-sub" id="overPct"></div>
-                        </div>
-                    </div>
 
-                    <div class="chart-wrap">
+                        <div class="chart-wrap">
                         <div class="donut">
                             <svg viewBox="0 0 120 120">
                                 <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
@@ -723,6 +737,7 @@
                             <div class="legend-item"><span class="legend-dot dot-principal"></span> Jistina</div>
                             <div class="legend-item"><span class="legend-dot dot-interest"></span> Úroky</div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -788,24 +803,25 @@
                 <div class="card anim-3">
                     <div class="card-title"><span class="icon">📊</span> Výsledky</div>
 
-                    <div class="results">
-                        <div class="result-box main-green">
-                            <div class="result-label">Celková hodnota</div>
-                            <div class="result-value" id="ivTotal">—</div>
+                    <div class="results-row">
+                        <div class="results">
+                            <div class="result-box main-green">
+                                <div class="result-label">Celková hodnota</div>
+                                <div class="result-value" id="ivTotal">—</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-label">Celkem vloženo</div>
+                                <div class="result-value" id="ivDeposited">—</div>
+                                <div class="result-sub">počáteční + měsíční vklady</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-label">Čistý výnos</div>
+                                <div class="result-value" id="ivProfit">—</div>
+                                <div class="result-sub" id="ivProfitPct"></div>
+                            </div>
                         </div>
-                        <div class="result-box">
-                            <div class="result-label">Celkem vloženo</div>
-                            <div class="result-value" id="ivDeposited">—</div>
-                            <div class="result-sub">počáteční + měsíční vklady</div>
-                        </div>
-                        <div class="result-box">
-                            <div class="result-label">Čistý výnos</div>
-                            <div class="result-value" id="ivProfit">—</div>
-                            <div class="result-sub" id="ivProfitPct"></div>
-                        </div>
-                    </div>
 
-                    <div class="chart-wrap">
+                        <div class="chart-wrap">
                         <div class="donut">
                             <svg viewBox="0 0 120 120">
                                 <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0" stroke-width="18"/>
@@ -831,6 +847,7 @@
                             <div class="legend-item"><span class="legend-dot dot-deposit"></span> Vklady</div>
                             <div class="legend-item"><span class="legend-dot dot-profit"></span> Výnosy</div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
